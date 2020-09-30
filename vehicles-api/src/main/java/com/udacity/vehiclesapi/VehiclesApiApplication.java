@@ -1,5 +1,6 @@
 package com.udacity.vehiclesapi;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,6 +15,12 @@ public class VehiclesApiApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(VehiclesApiApplication.class, args);
 	}
+
+	@Bean
+	public ModelMapper modelMapper() {
+		return new ModelMapper();
+	}
+
 
 	/**
 	 * Web Client for the maps (location) API

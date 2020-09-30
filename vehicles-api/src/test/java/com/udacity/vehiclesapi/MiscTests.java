@@ -1,7 +1,9 @@
 package com.udacity.vehiclesapi;
 
+import com.udacity.vehiclesapi.client.maps.MapsClient;
 import com.udacity.vehiclesapi.client.prices.Price;
 import com.udacity.vehiclesapi.client.prices.PriceClient;
+import com.udacity.vehiclesapi.domain.Location;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,15 +28,25 @@ public class MiscTests {
     @Autowired
     PriceClient priceClient;
 
+    @Autowired
+    MapsClient mapsClient;
+
     /*
     Pricing client should be running in order for this test to pass.
     It should get a price from the pricing-service
      */
     @Test
     public void testPriceClient(){
-        System.out.println("testing price client");
         String priceString = priceClient.getPrice(1L);
         assertTrue(priceString.contains("USD"));
+    }
+
+    @Test
+    public void testMapClient(){
+        Location location = new Location(20.0, 30.0);
+        mapsClient.getAddress(location);
+        assertNotNull(location.getAddress());
+        assertNotNull(location.getZip());
     }
 
 
