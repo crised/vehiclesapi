@@ -4,11 +4,12 @@ import com.udacity.vehiclesapi.domain.car.Car;
 import com.udacity.vehiclesapi.service.CarService;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,7 +18,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping("/cars")
-public class CarController {
+class CarController {
 
     private final CarService carService;
     private final CarResourceAssembler assembler;
@@ -53,5 +54,55 @@ public class CarController {
          *   Update the first line as part of the above implementing.
          */
         return assembler.toResource(new Car());
+    }
+
+    /**
+     * Posts information to create a new vehicle in the system.
+     * @param car A new vehicle to add to the system.
+     * @return response that the new vehicle was added to the system
+     * @throws URISyntaxException if the request contains invalid fields or syntax
+     */
+    @PostMapping
+    ResponseEntity<?> post(@Valid @RequestBody Car car) throws URISyntaxException {
+        /**
+         * TODO: Use the `save` method from the Car Service to save the input car.
+         * TODO: Use the `assembler` on that saved car and return as part of the response.
+         *   Update the first line as part of the above implementing.
+         */
+        System.out.println("posting nicely: " + car);
+        carService.save(car);
+        Resource<Car> resource = assembler.toResource(car);
+        return ResponseEntity.created(new URI(resource.getId().expand().getHref())).body(resource);
+    }
+
+    /**
+     * Updates the information of a vehicle in the system.
+     * @param id The ID number for which to update vehicle information.
+     * @param car The updated information about the related vehicle.
+     * @return response that the vehicle was updated in the system
+     */
+    @PutMapping("/{id}")
+    ResponseEntity<?> put(@PathVariable Long id, @Valid @RequestBody Car car) {
+        /**
+         * TODO: Set the id of the input car object to the `id` input.
+         * TODO: Save the car using the `save` method from the Car service
+         * TODO: Use the `assembler` on that updated car and return as part of the response.
+         *   Update the first line as part of the above implementing.
+         */
+        Resource<Car> resource = assembler.toResource(new Car());
+        return ResponseEntity.ok(resource);
+    }
+
+    /**
+     * Removes a vehicle from the system.
+     * @param id The ID number of the vehicle to remove.
+     * @return response that the related vehicle is no longer in the system
+     */
+    @DeleteMapping("/{id}")
+    ResponseEntity<?> delete(@PathVariable Long id) {
+        /**
+         * TODO: Use the Car Service to delete the requested vehicle.
+         */
+        return ResponseEntity.noContent().build();
     }
 }
