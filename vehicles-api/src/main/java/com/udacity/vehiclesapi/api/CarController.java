@@ -32,13 +32,12 @@ class CarController {
      * Creates a list to store any vehicles.
      * @return list of vehicles
      */
-    @GetMapping
+    @GetMapping(produces = "application/json; charset=UTF-8")
     Resources<Resource<Car>> list(){
         List<Resource<Car>> resources = carService.list().stream().map(assembler::toResource)
                 .collect(Collectors.toList());
         return new Resources<>(resources,
                 linkTo(methodOn(CarController.class).list()).withSelfRel());
-
     }
 
     /**
