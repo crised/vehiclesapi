@@ -116,10 +116,14 @@ public class CarControllerTest {
      */
     @Test
     public void findCar() throws Exception {
-        /**
-         * TODO: Add a test to check that the `get` method works by calling
-         *   a vehicle by ID. This should utilize the car from `getCar()` below.
-         */
+        createCar();
+        Car car = getCar();
+        mvc.perform(get(new URI("/cars/1"))
+                .accept(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("details.model", is(car.getDetails().getModel())))
+                .andExpect(jsonPath("condition", is(car.getCondition().toString())));
+
     }
 
     /**
