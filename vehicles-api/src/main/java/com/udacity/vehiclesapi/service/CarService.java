@@ -7,6 +7,7 @@ import com.udacity.vehiclesapi.domain.car.CarRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Implements the car service create, read, update or delete
@@ -45,7 +46,10 @@ public class CarService {
          *   If it does not exist, throw a CarNotFoundException
          *   Remove the below code as part of your implementation.
          */
-        Car car = new Car();
+        Optional<Car> optionalCar = repository.findById(id);
+        return optionalCar.orElseThrow(CarNotFoundException::new);
+
+
 
         /**
          * TODO: Use the Pricing Web client you create in `VehiclesApiApplication`
@@ -66,7 +70,6 @@ public class CarService {
          */
 
 
-        return car;
     }
 
     /**
