@@ -1,23 +1,20 @@
 package com.udacity.vehiclesapi;
 
 import com.udacity.vehiclesapi.client.maps.MapsClient;
-import com.udacity.vehiclesapi.client.prices.Price;
 import com.udacity.vehiclesapi.client.prices.PriceClient;
 import com.udacity.vehiclesapi.domain.Location;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.context.annotation.Bean;
+import org.springframework.test.context.junit4.SpringRunner;
 
-import static org.mockito.Mockito.verify;
-import static org.mockito.internal.verification.VerificationModeFactory.times;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
 
+@RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
 public class MiscTests {
